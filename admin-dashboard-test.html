@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard Test - Toggle Functionality</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+        <div class="logo">Admin Panel - Test</div>
+        <ul class="nav-links">
+            <li><a href="index.html">View Main Site</a></li>
+            <li><a href="#" id="logout-btn" class="nav-button">Logout</a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+  </header>
+
+  <div class="admin-container">
+    <aside class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="#" data-target="dashboard">Dashboard</a></li>
+            <li class="has-submenu">
+                <a href="#" data-target="event-management">Event Management</a>
+                <ul class="submenu">
+                    <li><a href="#" data-target="add-event">Add Event</a></li>
+                    <li><a href="#" data-target="view-events">View Events</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" data-target="finance-management">Finance Management</a>
+                <ul class="submenu">
+                    <li><a href="#" data-target="add-finance">Add Finance Entry</a></li>
+                    <li><a href="#" data-target="view-finance">View Finance Data</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="admin-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="admin-section">
+            <h2>Welcome to the Admin Dashboard</h2>
+            <p>Select an option from the sidebar to manage events or finances.</p>
+            <p><strong>Toggle Test:</strong> Click on "Event Management" or "Finance Management" to see the toggle functionality in action!</p>
+        </section>
+
+        <!-- Event Management Sections -->
+        <div id="event-management" class="admin-section-container hidden">
+            <section id="add-event" class="admin-section">
+              <h2>Add Event</h2>
+              <p>This is the Add Event section. The toggle functionality allows you to expand/collapse the Event Management menu.</p>
+              <form id="event-form">
+                <div class="form-group">
+                  <label for="title">Title:</label>
+                  <input type="text" id="title" required />
+                </div>
+                <div class="form-group">
+                  <label for="date">Date:</label>
+                  <input type="date" id="date" required />
+                </div>
+                <div class="form-group">
+                  <label for="time">Time:</label>
+                  <input type="time" id="time" required />
+                </div>
+                <div class="form-group">
+                  <label for="description">Description:</label>
+                  <textarea id="description" rows="4" required></textarea>
+                </div>
+                <button type="submit">Submit Event (Demo)</button>
+              </form>
+            </section>
+
+            <section id="view-events" class="admin-section hidden">
+                <h2>View Events</h2>
+                <p>This is the View Events section. You can navigate between Add Event and View Events using the submenu.</p>
+
+                <div class="text-center mb-3">
+                    <span id="upcoming-tab" style="cursor: pointer; font-weight: bold; color: black;">Upcoming Events</span> |
+                    <span id="past-tab" style="cursor: pointer; font-weight: bold; color: black;">Past Events</span>
+                </div>
+
+                <div class="events-container">
+                    <div id="events-list" class="row justify-content-center">
+                        <!-- Dynamic event cards will be injected here -->
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Finance Management Sections -->
+        <div id="finance-management" class="admin-section-container hidden">
+            <section id="add-finance" class="admin-section">
+              <h2>Add Finance Entry</h2>
+              <p>This is the Add Finance Entry section. The toggle functionality allows you to expand/collapse the Finance Management menu.</p>
+              <form id="financeForm">
+                <div class="form-group">
+                  <label for="financeDate">Date:</label>
+                  <input type="date" id="financeDate" required />
+                </div>
+                <div class="form-group">
+                  <label for="financeDescription">Description:</label>
+                  <input type="text" id="financeDescription" required />
+                </div>
+                <div class="form-group">
+                  <label for="amount">Amount:</label>
+                  <input type="number" id="amount" required />
+                </div>
+                <div class="form-group">
+                  <label for="entryType">Type:</label>
+                  <select id="entryType" required>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                  </select>
+                </div>
+                <button type="submit">Add Entry (Demo)</button>
+              </form>
+            </section>
+
+            <section id="view-finance" class="admin-section hidden">
+              <h2>View Finance Data</h2>
+              <p>This is the View Finance Data section. You can navigate between Add Finance Entry and View Finance Data using the submenu.</p>
+              <table class="finance-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2025-07-31</td>
+                    <td>Sample Income</td>
+                    <td class="income">₹1000.00</td>
+                    <td class="income">income</td>
+                  </tr>
+                  <tr>
+                    <td>2025-07-30</td>
+                    <td>Sample Expense</td>
+                    <td class="expense">₹500.00</td>
+                    <td class="expense">expense</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="total-balance">Total Balance: <span id="totalBalance">₹500.00</span></p>
+            </section>
+        </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log("Test admin dashboard loaded!");
+        
+        // ✅ Sidebar Navigation (without Firebase)
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parentLi = link.parentElement;
+                const isSubmenuParent = parentLi.classList.contains('has-submenu');
+                const targetId = link.dataset.target;
+
+                if (isSubmenuParent) {
+                    // If it's a main menu item with submenu, toggle its active state
+                    if (link.parentElement.parentElement.classList.contains('sidebar-nav')) {
+                        // Close other open submenus
+                        document.querySelectorAll('.sidebar-nav .has-submenu').forEach(item => {
+                            if (item !== parentLi) {
+                                item.classList.remove('active');
+                            }
+                        });
+                        // Toggle current submenu
+                        parentLi.classList.toggle('active');
+                        
+                        // If we're opening a submenu, show its default content
+                        if (parentLi.classList.contains('active') && targetId) {
+                            handleContentNavigation(targetId);
+                        }
+                    }
+                } else {
+                    // Handle content visibility for submenu items and regular links
+                    if (targetId) {
+                        handleContentNavigation(targetId);
+                    }
+                }
+            });
+        });
+
+        function handleContentNavigation(targetId) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section, .admin-section-container').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show target section/container
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.classList.remove('hidden');
+                // If it's a sub-section, also show its parent container
+                if (targetElement.closest('.admin-section-container')) {
+                    targetElement.closest('.admin-section-container').classList.remove('hidden');
+                }
+            }
+            
+            // Handle active states for sidebar links
+            sidebarLinks.forEach(link => link.classList.remove('active-link')); // Remove from all links
+            const activeLink = document.querySelector(`.sidebar-nav a[data-target="${targetId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active-link'); // Add to the clicked link
+                // Also activate parent if it's a submenu item
+                const parentSubmenu = activeLink.closest('.has-submenu');
+                if (parentSubmenu) {
+                    parentSubmenu.classList.add('active');
+                }
+            }
+        }
+
+        // Set default view and activate its link
+        handleContentNavigation('dashboard');
+        document.querySelector('.sidebar-nav a[data-target="dashboard"]').classList.add('active-link');
+
+        // Demo form handlers
+        document.getElementById('event-form')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Event form submitted! (This is just a demo)');
+        });
+
+        document.getElementById('financeForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Finance form submitted! (This is just a demo)');
+        });
+    });
+  </script>
+</body>
+</html>
