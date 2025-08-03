@@ -306,35 +306,28 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem;
+        padding: 1.5rem 1rem; /* Increased padding for better touch targets */
     }
 
     .navbar .logo {
-        font-size: 1.5rem;
-        text-overflow: ellipsis;
-        line-height: 2.2;
-        white-space: nowrap;
-        overflow: hidden;
+        font-size: 2rem; /* Increased logo font size */
     }
 
     .navbar .nav-links {
-        position: fixed; /* Changed to fixed */
+        position: fixed;
         right: 0;
-        top: 0; /* Start from top */
-        height: 100vh; /* Full height */
+        top: 0;
+        height: 100vh;
         background-color: var(--white);
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center; /* Center links vertically */
-        width: 70%;
+        justify-content: center;
+        width: 80%; /* Wider menu */
         transform: translateX(100%);
         transition: transform 0.5s ease-in;
         box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-        padding-top: 60px; /* Space for fixed header */
+        z-index: 999; /* Ensure it's above other content but below fixed navbar */
     }
 
     .navbar .nav-links.nav-active {
@@ -342,24 +335,28 @@ footer {
     }
 
     .navbar .nav-links li {
-        margin: 1.5rem 0;
+        margin: 2.5rem 0; /* Increased margin between links */
     }
 
     .navbar .nav-links a {
-        font-size: 1.5rem; /* Larger font for mobile menu */
+        font-size: 2rem; /* Increased font size for nav links */
     }
 
     .burger {
         display: block;
-        justify-content: center;
+        z-index: 1001; /* Ensure burger is clickable */
+    }
+
+    .banner {
+        height: 50vh;
     }
 
     .banner-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .banner-content p {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .section {
@@ -374,8 +371,71 @@ footer {
         font-size: 1rem;
     }
 
-    .events-container {
+    .events-grid {
+        grid-template-columns: 1fr; /* Single column for events */
+    }
+
+    .gallery-grid img {
+        max-height: 300px; /* Smaller images on tablet */
+    }
+
+    .video-contaner iframe {
+        width: 100%;
+        height: 250px; /* Adjust height for smaller screens */
+    }
+
+    .donation-content {
         flex-direction: column;
+    }
+
+    .qr-code {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar .logo {
+        font-size: 1.8rem; /* Adjusted logo font size for smaller mobiles */
+    }
+
+    .banner {
+        height: 40vh;
+    }
+
+    .banner-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .banner-content p {
+        font-size: 0.9rem;
+    }
+
+    .section {
+        padding: 2rem 0.5rem;
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+    }
+
+    .section p {
+        font-size: 0.9rem;
+    }
+
+    .event-card {
+        width: 100%; /* Full width for event cards */
+    }
+
+    .gallery-grid img {
+        max-height: 200px; /* Even smaller images on mobile */
+    }
+
+    .video-contaner iframe {
+        height: 200px; /* Further adjust height for mobile */
+    }
+
+    .qr-code {
+        max-width: 150px;
     }
 }
 
